@@ -2,7 +2,8 @@ import { Card, CardProps, Group, Image, Pill, Skeleton, Stack, Text } from '@man
 import { Fragment } from 'react';
 
 import pokeball from '../../assets/pokeball.svg';
-import { Pokemon } from '../../types/pokemon';
+import { Pokemon, PokemonType } from '../../types/pokemon';
+import { pokemonTypeColorMapper } from '../../utils/pokemon-type-color-mapper';
 
 const baseCardProps: CardProps = {
   shadow: 'md',
@@ -45,12 +46,23 @@ export function PokemonCard({ pokemon, isLoading }: { pokemon?: Pokemon; isLoadi
                     <Image src={pokemon.sprites.front_default} alt={pokemon.name} fallbackSrc={pokeball} className="mt-1" />
                   </Card.Section>
 
-                  <Text ta="center">{pokemon.name.toUpperCase()}</Text>
+                  <Text ta="center" fw={800}>
+                    {pokemon.name.toUpperCase()}
+                  </Text>
 
                   <Group gap={5}>
-                    {pokemon.types.map(({ type }, index) => (
-                      <Pill key={index}>{type.name.toUpperCase()}</Pill>
-                    ))}
+                    {pokemon.types.map(({ type }, index) => {
+                      const typeName = type.name as PokemonType;
+
+                      return (
+                        // FIXME: a11y contrast
+                        <Pill key={index} bg={pokemonTypeColorMapper(typeName)}>
+                          <Text inherit fw={600}>
+                            {typeName.toUpperCase()}
+                          </Text>
+                        </Pill>
+                      );
+                    })}
                   </Group>
                 </Stack>
               }
