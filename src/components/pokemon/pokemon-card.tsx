@@ -1,33 +1,66 @@
-import { Card, Group, Image, Pill, Text } from '@mantine/core';
+import { Card, CardProps, Group, Image, Pill, Skeleton, Text } from '@mantine/core';
+import { Fragment } from 'react';
 
+import pokeball from '../../assets/pokeball.svg';
 import { Pokemon } from '../../types/pokemon';
 
-export function PokemonCard({ pokemon }: { pokemon?: Pokemon }) {
-  return (
-    <div className="flex">
-      <Card shadow="md" radius="md" padding="lg" withBorder className="w-12 flex-grow-0 flex-shrink-0">
-        {pokemon ? (
-          <>
-            {
-              <div className="flex flex-col items-center">
-                <Card.Section>
-                  <Image src={pokemon.sprites.front_default} alt={pokemon.name} />
-                </Card.Section>
+const baseCardProps: CardProps = {
+  shadow: 'md',
+  radius: 'md',
+  padding: 'lg',
+  withBorder: true,
+  className: 'w-12 h-12'
+};
 
-                <Text ta="center">{pokemon.name.toUpperCase()}</Text>
+export function PokemonCard({ pokemon, isLoading }: { pokemon?: Pokemon; isLoading: boolean }) {
+  let state: 'loading' | 'results' | 'error' = 'loading';
 
-                <Group gap="5" className="mt-1">
-                  {pokemon.types.map(({ type }, index) => (
-                    <Pill key={index}>{type.name.toUpperCase()}</Pill>
-                  ))}
-                </Group>
-              </div>
-            }
-          </>
-        ) : (
-          <Text>{'Missing No'}</Text>
-        )}
-      </Card>
-    </div>
-  );
+  if (isLoading) {
+    state = 'loading';
+  }
+
+  if (!!pokemon) {
+    state = 'results';
+  }
+
+  return {
+    loading: () => {
+      return (
+        <Skeleton>
+          <Card {...baseCardProps}></Card>
+        </Skeleton>
+      );
+    },
+    error: () => {
+      // TODO: error handling
+      return null;
+    },
+    results: () => {
+      return (
+        <Card {...baseCardProps}>
+          {pokemon ? (
+            <Fragment>
+              {
+                <div className="flex flex-col items-center">
+                  <Card.Section>
+                    <Image src={pokemon.sprites.front_default} alt={pokemon.name} fallbackSrc={pokeball} />
+                  </Card.Section>
+
+                  <Text ta="center">{pokemon.name.toUpperCase()}</Text>
+
+                  <Group gap="5" className="mt-1">
+                    {pokemon.types.map(({ type }, index) => (
+                      <Pill key={index}>{type.name.toUpperCase()}</Pill>
+                    ))}
+                  </Group>
+                </div>
+              }
+            </Fragment>
+          ) : (
+            <Text>{'Missing No'}</Text>
+          )}
+        </Card>
+      );
+    }
+  }[state]();
 }
