@@ -14,6 +14,7 @@ function App() {
         </AppShell.Header>
 
         <AppShellMain className="flex justify-center items-center">
+          {/* FIXME: should this be renamed to something else? DexItem? */}
           <PokemonContainer />
         </AppShellMain>
       </AppShell>

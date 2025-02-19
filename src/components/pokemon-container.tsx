@@ -1,4 +1,4 @@
-import { ActionIcon, Loader } from '@mantine/core';
+import { ActionIcon } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import { Fragment, useState } from 'react';
 import { HiArrowNarrowLeft, HiArrowNarrowRight } from 'react-icons/hi';
@@ -6,6 +6,7 @@ import { HiArrowNarrowLeft, HiArrowNarrowRight } from 'react-icons/hi';
 import { fetchPokemon } from '../api/get-pokemon';
 import { PokemonCard } from './pokemon/pokemon-card';
 
+// TODO: not sold on the naming of this
 export function PokemonContainer() {
   const [id, setId] = useState(1);
   const { data: pokemon, isLoading } = useQuery({ queryKey: ['pokemon', id], queryFn: async () => fetchPokemon(id) });
@@ -16,8 +17,7 @@ export function PokemonContainer() {
   return (
     <Fragment>
       <div className="flex flex-col items-center">
-        {isLoading && <Loader></Loader>}
-        {!isLoading && <PokemonCard pokemon={pokemon} />}
+        <PokemonCard pokemon={pokemon} isLoading={isLoading} />
 
         <div className="flex justify-center mt-1 gap-1">
           {id >= 2 ? (
