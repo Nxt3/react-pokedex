@@ -29,7 +29,7 @@ export function PokemonContainer() {
             <ActionIcon size="xl" onClick={prev}>
               <HiArrowNarrowLeft />
             </ActionIcon>
-          ) : null}
+          ) : undefined}
           <ActionIcon size="xl" onClick={next}>
             <HiArrowNarrowRight />
           </ActionIcon>
