@@ -1,4 +1,4 @@
-import { Card, CardProps, Group, Image, Pill, Skeleton, Text } from '@mantine/core';
+import { Card, CardProps, Group, Image, Pill, Skeleton, Stack, Text } from '@mantine/core';
 import { Fragment } from 'react';
 
 import pokeball from '../../assets/pokeball.svg';
@@ -7,7 +7,6 @@ import { Pokemon } from '../../types/pokemon';
 const baseCardProps: CardProps = {
   shadow: 'md',
   radius: 'md',
-  padding: 'lg',
   withBorder: true,
   className: 'w-12 h-12'
 };
@@ -41,19 +40,19 @@ export function PokemonCard({ pokemon, isLoading }: { pokemon?: Pokemon; isLoadi
           {pokemon ? (
             <Fragment>
               {
-                <div className="flex flex-col items-center">
+                <Stack align="center" justify="center" gap="xs">
                   <Card.Section>
-                    <Image src={pokemon.sprites.front_default} alt={pokemon.name} fallbackSrc={pokeball} />
+                    <Image src={pokemon.sprites.front_default} alt={pokemon.name} fallbackSrc={pokeball} className="mt-1" />
                   </Card.Section>
 
                   <Text ta="center">{pokemon.name.toUpperCase()}</Text>
 
-                  <Group gap="5" className="mt-1">
+                  <Group gap={5}>
                     {pokemon.types.map(({ type }, index) => (
                       <Pill key={index}>{type.name.toUpperCase()}</Pill>
                     ))}
                   </Group>
-                </div>
+                </Stack>
               }
             </Fragment>
           ) : (
