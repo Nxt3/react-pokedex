@@ -1,24 +1,15 @@
-import { AppShell, AppShellMain, Group, Title } from '@mantine/core';
+import { MantineProvider } from '@mantine/core';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { PokemonContainer } from '../components/pokemon-container';
+import AppShell from '../components/app-shell';
 
 function App() {
   return (
-    <QueryClientProvider client={new QueryClient()}>
-      <AppShell padding="md" header={{ height: 64 }}>
-        <AppShell.Header>
-          <Group h="100%" px="md">
-            <Title>React Pokédex</Title>
-          </Group>
-        </AppShell.Header>
-
-        <AppShellMain className="flex justify-center items-center">
-          {/* FIXME: should this be renamed to something else? DexItem? */}
-          <PokemonContainer />
-        </AppShellMain>
-      </AppShell>
-    </QueryClientProvider>
+    <MantineProvider defaultColorScheme="auto">
+      <QueryClientProvider client={new QueryClient()}>
+        <AppShell />
+      </QueryClientProvider>
+    </MantineProvider>
   );
 }
 
