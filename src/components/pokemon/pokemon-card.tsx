@@ -50,13 +50,20 @@ export function PokemonCard({ pokemon, isLoading }: { pokemon?: Pokemon; isLoadi
                     {pokemon.name.toUpperCase()}
                   </Text>
 
-                  <Group gap={5}>
+                  <Group gap={8}>
                     {pokemon.types.map(({ type }, index) => {
                       const typeName = type.name as PokemonType;
 
                       return (
-                        // FIXME: a11y contrast
-                        <Pill key={index} bg={pokemonTypeColorMapper(typeName)}>
+                        <Pill
+                          key={index}
+                          styles={() => ({
+                            root: {
+                              // NOTE: using outline to circumvent a11y contrast concerns
+                              outline: `2px solid ${pokemonTypeColorMapper(typeName)}`
+                            }
+                          })}
+                        >
                           <Text inherit fw={600}>
                             {typeName.toUpperCase()}
                           </Text>
