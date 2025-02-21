@@ -1,7 +1,7 @@
 import { Card, CardProps, Group, Image, Pill, Skeleton, Stack, Text } from '@mantine/core';
 
-import pokeball from '../../assets/pokeball.svg';
-import { Pokemon } from '../../types/pokemon';
+import pokeball from '../assets/pokeball.svg';
+import { Pokemon } from '../types/pokemon';
 import { PokemonTypes } from './pokemon-types';
 
 const baseCardProps: CardProps = {
@@ -11,7 +11,7 @@ const baseCardProps: CardProps = {
   className: 'w-12 h-14'
 };
 
-export function PokemonCard({ pokemon, isLoading }: { pokemon?: Pokemon; isLoading: boolean }) {
+export function PokemonCard({ pokemon, isLoading, onOpenDetails }: { pokemon?: Pokemon; isLoading: boolean; onOpenDetails: () => void }) {
   let state: 'loading' | 'results' | 'error' = 'loading';
 
   if (isLoading) {
@@ -38,8 +38,7 @@ export function PokemonCard({ pokemon, isLoading }: { pokemon?: Pokemon; isLoadi
       const { id, name, types, sprites } = pokemon!;
 
       return (
-        // TODO: open modal with more details onClick
-        <Card {...baseCardProps} onClick={() => console.log(`Clicked #${id}: ${name.toUpperCase()}`)}>
+        <Card {...baseCardProps} onClick={onOpenDetails}>
           <Stack align="flex-end" justify="flex-start" gap="xs">
             <Pill size="sm" radius={baseCardProps.radius}>
               {id}

@@ -4,20 +4,25 @@ import { Fragment, useState } from 'react';
 import { HiArrowNarrowLeft, HiArrowNarrowRight } from 'react-icons/hi';
 
 import { fetchPokemon } from '../api/get-pokemon';
-import { PokemonCard } from './pokemon/pokemon-card';
+import { PokemonCard } from './pokemon-card';
+import { PokemonDetailsContainer } from './pokemon-details/pokemon-details-container';
 
 // TODO: not sold on the naming of this
 export function PokemonContainer() {
   const [id, setId] = useState(1);
-  const { data: pokemon, isLoading } = useQuery({ queryKey: ['pokemon', id], queryFn: async () => fetchPokemon(id) });
-
   const prev = () => setId(id - 1);
   const next = () => setId(id + 1);
+
+  const { data: pokemon, isLoading } = useQuery({ queryKey: ['pokemon', id], queryFn: async () => fetchPokemon(id) });
+
+  const [showDetails, setDetailsShown] = useState(false);
+  const openPokemonDetails = () => setDetailsShown(true);
+  const closePokemonDetails = () => setDetailsShown(false);
 
   return (
     <Fragment>
       <div className="flex flex-col items-center">
-        <PokemonCard pokemon={pokemon} isLoading={isLoading} />
+        <PokemonCard onOpenDetails={openPokemonDetails} pokemon={pokemon} isLoading={isLoading} />
 
         <div className="flex justify-center mt-1 gap-1">
           {id >= 2 ? (
@@ -30,6 +35,8 @@ export function PokemonContainer() {
           </ActionIcon>
         </div>
       </div>
+
+      {!!pokemon && <PokemonDetailsContainer pokemon={pokemon} showDetails={showDetails} closeDetails={closePokemonDetails} />}
     </Fragment>
   );
 }
