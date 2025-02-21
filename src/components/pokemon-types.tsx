@@ -1,7 +1,7 @@
 import { Pill, Text } from '@mantine/core';
 
-import { Pokemon, PokemonType } from '../../types/pokemon';
-import { pokemonTypeColorMapper } from '../../utils/pokemon-type-color-mapper';
+import { Pokemon, PokemonType } from '../types/pokemon';
+import { pokemonTypeColorMapper } from '../utils/pokemon-type-color-mapper';
 
 export function PokemonTypes({ types }: { types: Pokemon['types'] }) {
   return types.map(({ type }, index) => {
