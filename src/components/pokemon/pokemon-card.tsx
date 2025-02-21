@@ -1,5 +1,4 @@
 import { Card, CardProps, Group, Image, Pill, Skeleton, Stack, Text } from '@mantine/core';
-import { Fragment } from 'react';
 
 import pokeball from '../../assets/pokeball.svg';
 import { Pokemon } from '../../types/pokemon';
@@ -36,37 +35,30 @@ export function PokemonCard({ pokemon, isLoading }: { pokemon?: Pokemon; isLoadi
       return null;
     },
     results: () => {
+      const { id, name, types, sprites } = pokemon!;
+
       return (
-        <Card {...baseCardProps}>
-          {pokemon ? (
-            <Fragment>
-              {
-                <Fragment>
-                  <Stack align="flex-end" justify="flex-start" gap="xs">
-                    <Pill size="sm" radius={baseCardProps.radius}>
-                      {pokemon.id}
-                    </Pill>
-                  </Stack>
+        // TODO: open modal with more details onClick
+        <Card {...baseCardProps} onClick={() => console.log(`Clicked #${id}: ${name.toUpperCase()}`)}>
+          <Stack align="flex-end" justify="flex-start" gap="xs">
+            <Pill size="sm" radius={baseCardProps.radius}>
+              {id}
+            </Pill>
+          </Stack>
 
-                  <Stack align="center" justify="center" gap="xs">
-                    <Card.Section>
-                      <Image src={pokemon.sprites.front_default} alt={pokemon.name} fallbackSrc={pokeball} className="mt-1" />
-                    </Card.Section>
+          <Stack align="center" justify="center" gap="xs">
+            <Card.Section>
+              <Image src={sprites.front_default} alt={name} fallbackSrc={pokeball} className="mt-1" />
+            </Card.Section>
 
-                    <Text ta="center" fw={800}>
-                      {pokemon.name.toUpperCase()}
-                    </Text>
+            <Text ta="center" fw={800}>
+              {name.toUpperCase()}
+            </Text>
 
-                    <Group gap={10}>
-                      <PokemonTypes types={pokemon.types} />
-                    </Group>
-                  </Stack>
-                </Fragment>
-              }
-            </Fragment>
-          ) : (
-            <Text>{'Missing No'}</Text>
-          )}
+            <Group gap={10}>
+              <PokemonTypes types={types} />
+            </Group>
+          </Stack>
         </Card>
       );
     }
