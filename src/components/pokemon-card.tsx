@@ -1,8 +1,8 @@
-import { Card, CardProps, Group, Image, Pill, Skeleton, Stack, Text } from '@mantine/core';
+import { Card, CardProps, Image, Pill, Skeleton, Stack, Text } from '@mantine/core';
 
 import pokeball from '../assets/pokeball.svg';
 import { Pokemon } from '../types/pokemon';
-import { PokemonTypes } from './pokemon-types';
+import { PokemonTypings } from './pokemon-typings';
 
 const baseCardProps: CardProps = {
   shadow: 'md',
@@ -11,7 +11,7 @@ const baseCardProps: CardProps = {
   className: 'w-12 h-14'
 };
 
-export function PokemonCard({ pokemon, isLoading, onOpenDetails }: { pokemon?: Pokemon; isLoading: boolean; onOpenDetails: () => void }) {
+export function PokemonCard({ pokemon, isLoading, onOpenDetails }: { pokemon?: Pokemon; isLoading?: boolean; onOpenDetails?: () => void }) {
   let state: 'loading' | 'results' | 'error' = 'loading';
 
   if (isLoading) {
@@ -54,9 +54,7 @@ export function PokemonCard({ pokemon, isLoading, onOpenDetails }: { pokemon?: P
               {name.toUpperCase()}
             </Text>
 
-            <Group gap={10}>
-              <PokemonTypes types={types} />
-            </Group>
+            <PokemonTypings types={types} />
           </Stack>
         </Card>
       );
