@@ -2,6 +2,8 @@ import { PokeAPI } from 'pokeapi-types';
 
 export type Pokemon = PokeAPI.Pokemon;
 
+export type PokemonDetails = PokeAPI.PokemonSpecies;
+
 export enum PokemonTypes {
   NORMAL = 'normal',
   FIRE = 'fire',

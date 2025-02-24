@@ -2,17 +2,28 @@ import { Card, CardProps, Image, Pill, Skeleton, Stack, Text } from '@mantine/co
 
 import pokeball from '../assets/pokeball.svg';
 import { Pokemon } from '../types/pokemon';
+import { TemplateState } from '../types/template-state';
 import { PokemonTypings } from './pokemon-typings';
 
 const baseCardProps: CardProps = {
   shadow: 'md',
   radius: 'lg',
   withBorder: true,
-  className: 'w-12 h-14'
+  className: 'w-12 h-14 cursor-pointer'
 };
 
-export function PokemonCard({ pokemon, isLoading, onOpenDetails }: { pokemon?: Pokemon; isLoading?: boolean; onOpenDetails?: () => void }) {
-  let state: 'loading' | 'results' | 'error' = 'loading';
+export function PokemonCard({
+  pokemon,
+  isLoading,
+  onOpenDetails,
+  onHover
+}: {
+  pokemon?: Pokemon;
+  isLoading?: boolean;
+  onOpenDetails?: () => void;
+  onHover?: () => void;
+}) {
+  let state: TemplateState = 'loading';
 
   if (isLoading) {
     state = 'loading';
@@ -38,7 +49,8 @@ export function PokemonCard({ pokemon, isLoading, onOpenDetails }: { pokemon?: P
       const { id, name, types, sprites } = pokemon!;
 
       return (
-        <Card {...baseCardProps} onClick={onOpenDetails}>
+        // FIXME: need to debounce onMouseEnter
+        <Card {...baseCardProps} onClick={onOpenDetails} onMouseEnter={onHover}>
           <Stack align="flex-end" justify="flex-start" gap="xs">
             <Pill size="sm" radius={baseCardProps.radius}>
               {id}

@@ -1,8 +1,9 @@
-import { Group, Image, ImageProps, Space, Text } from '@mantine/core';
+import { Group, Image, ImageProps, Loader, Space, Stack, Text } from '@mantine/core';
 import { Fragment } from 'react/jsx-runtime';
 
 import pokeball from '../../assets/pokeball.svg';
-import { Pokemon } from '../../types/pokemon';
+import { Pokemon, PokemonDetails as PokemonDetailsType } from '../../types/pokemon';
+import { TemplateState } from '../../types/template-state';
 import { toSentenceCase } from '../../utils/sentence-case';
 import { PokemonTypings } from '../pokemon-typings';
 
@@ -15,44 +16,85 @@ const commonSpriteProps = (
   fallbackSrc: pokeball
 });
 
-export function PokemonDetails({ pokemon }: { pokemon: Pokemon }) {
-  const { name, types, sprites, height, weight } = pokemon;
+export function PokemonDetails({
+  pokemon,
+  pokemonDetails,
+  isLoading
+}: {
+  pokemon: Pokemon;
+  pokemonDetails?: PokemonDetailsType;
+  isLoading: boolean;
+}) {
+  let state: TemplateState = 'loading';
 
-  // convert decimeters to inches
-  const convertToInches = (height: number) => (height * 0.393701).toFixed(1);
-  // convert hectograms to pounds
-  const convertToPounds = (weight: number) => (weight * 0.220462).toFixed(1);
+  if (isLoading) {
+    state = 'loading';
+  }
 
-  // TODO: need to call API for Pokedex flavor text
-  // IDEA: pre-fetch this when card is rendered before clicking
-  // https://pokeapi.co/api/v2/pokemon-species/{id}
-  return (
-    <Fragment>
-      {/* FIXME: DRY */}
-      <Group gap="xs" justify="center">
-        <Image src={sprites.front_default} {...commonSpriteProps(name, 'default')} />
-        <Image src={sprites.front_shiny} {...commonSpriteProps(name, 'shiny')} />
-        {sprites.front_female && (
-          <Fragment>
-            <Image src={sprites.front_female} {...commonSpriteProps(name, 'female')} />
-            <Image src={sprites.front_shiny_female} {...commonSpriteProps(name, 'shiny female')} />
-          </Fragment>
-        )}
-      </Group>
+  if (!!pokemonDetails) {
+    state = 'results';
+  }
 
-      <div className="flex items-center justify-center">
-        <PokemonTypings types={types} />
-      </div>
+  return {
+    loading: () => {
+      return (
+        <Stack align="center" justify="center" gap="xl">
+          <Loader color="blue" size="xl" type="bars" />
+        </Stack>
+      );
+    },
+    error: () => {
+      // TODO
+      return null;
+    },
+    results: () => {
+      const { name, types, sprites, height, weight } = pokemon;
+      const { flavor_text_entries } = pokemonDetails!;
 
-      <Text>Height: {convertToInches(height)} in</Text>
-      <Text>Weight: {convertToPounds(weight)} lbs</Text>
-      <Space h="lg" />
-      <Text fw={600}>Abilities</Text>
-      {pokemon.abilities.map((ability, index) => (
-        <Text key={index}>{toSentenceCase(ability.ability.name)}</Text>
-      ))}
+      // TODO: move to utils
+      // convert decimeters to inches
+      const convertToInches = (height: number) => (height * 0.393701).toFixed(1);
+      // convert hectograms to pounds
+      const convertToPounds = (weight: number) => (weight * 0.220462).toFixed(1);
 
-      <Space h="lg" />
-    </Fragment>
-  );
+      return (
+        <Fragment>
+          {/* FIXME: DRY */}
+          {/* TODO: Differentiate between male/female */}
+          <Group gap="xs" justify="center">
+            <Image src={sprites.front_default} {...commonSpriteProps(name, 'default')} />
+            <Image src={sprites.front_shiny} {...commonSpriteProps(name, 'shiny')} />
+            {sprites.front_female && (
+              <Fragment>
+                <Image src={sprites.front_female} {...commonSpriteProps(name, 'female')} />
+                <Image src={sprites.front_shiny_female} {...commonSpriteProps(name, 'shiny female')} />
+              </Fragment>
+            )}
+          </Group>
+
+          <div className="flex items-center justify-center">
+            <PokemonTypings types={types} />
+          </div>
+
+          <Space h="md" />
+
+          <Text fs="italic" ta="center">
+            {flavor_text_entries[0].flavor_text}
+          </Text>
+
+          <Space h="lg" />
+
+          <Text>Height: {convertToInches(height)} in</Text>
+          <Text>Weight: {convertToPounds(weight)} lbs</Text>
+
+          <Space h="lg" />
+
+          <Text fw={600}>Abilities</Text>
+          {pokemon.abilities.map((ability, index) => (
+            <Text key={index}>{toSentenceCase(ability.ability.name)}</Text>
+          ))}
+        </Fragment>
+      );
+    }
+  }[state]();
 }
