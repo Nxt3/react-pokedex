@@ -22,9 +22,9 @@ pages:
     - rm -rf public/
   script:
     - npm run build
-  # after_script:
-  #   - cp public/index.html public/404.html
-  #   - cp public/index.html public/403.html
+  after_script:
+    - cp public/index.html public/404.html
+    - cp public/index.html public/403.html
   artifacts:
     paths:
     - public
