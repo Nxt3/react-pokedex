@@ -1,4 +1,4 @@
-import { Group, Image, ImageProps, Loader, Space, Stack, Text } from '@mantine/core';
+import { Group, Image, ImageProps, Loader, Stack, Text } from '@mantine/core';
 import { Fragment } from 'react/jsx-runtime';
 
 import pokeball from '../../assets/pokeball.svg';
@@ -72,24 +72,21 @@ export function PokemonDetails({
             )}
           </Group>
 
-          <div className="flex items-center justify-center">
-            <PokemonTypings types={types} />
-          </div>
+          <PokemonTypings types={types} />
 
-          <Space h="md" />
-
-          <Text fs="italic" ta="center">
-            {flavor_text_entries[0].flavor_text}
+          <Text fs="italic" ta="center" mt="md">
+            {/* Find first English flavor text */}
+            {flavor_text_entries?.find((flavorText) => flavorText.language.name === 'en')?.flavor_text}
           </Text>
 
-          <Space h="lg" />
+          <Stack mt="lg" gap="0">
+            <Text>Height: {convertToInches(height)} in</Text>
+            <Text>Weight: {convertToPounds(weight)} lbs</Text>
+          </Stack>
 
-          <Text>Height: {convertToInches(height)} in</Text>
-          <Text>Weight: {convertToPounds(weight)} lbs</Text>
-
-          <Space h="lg" />
-
-          <Text fw={600}>Abilities</Text>
+          <Text fw={600} mt="lg">
+            Abilities
+          </Text>
           {pokemon.abilities.map((ability, index) => (
             <Text key={index}>{toSentenceCase(ability.ability.name)}</Text>
           ))}

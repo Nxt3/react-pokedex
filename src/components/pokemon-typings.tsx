@@ -5,7 +5,7 @@ import { pokemonTypeColorMapper } from '../utils/pokemon-type-color-mapper';
 
 export function PokemonTypings({ types }: { types: Pokemon['types'] }) {
   return (
-    <Group>
+    <Group justify="center" align="center" gap="sm">
       {types.map(({ type }, index) => {
         const typeName = type.name as PokemonType;
 
