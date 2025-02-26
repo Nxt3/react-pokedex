@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+message="$(cat $1)"
+
+requiredPattern="^(build|chore|docs|feat|fix|refactor|style|test|ci|perf|revert)(\(\#[0-9]+\))*: .*$"
+if ! [[ $message =~ $requiredPattern ]]; then
+  echo ""
+  echo ""
+  echo ""
+  echo "There was an issue with the commit message. The commit message must adhere to the regex in the commit-msg file."
+  echo ""
+  echo "Examples:"
+  echo "fix(#1): description of the defect"
+  echo "feat(#32): description of the story"
+  echo "chore(#2): description of the chore"
+  echo ""
+  echo "Your commit message was:"
+  echo $message
+  echo ""
+  echo "For more information, check script in .husky/commit-msg"
+  echo ""
+  exit 1
+fi
