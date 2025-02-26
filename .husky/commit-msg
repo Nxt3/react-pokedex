@@ -5,7 +5,6 @@ requiredPattern="^(build|chore|docs|feat|fix|refactor|style|test|ci|perf|revert)
 if ! [[ $message =~ $requiredPattern ]]; then
   echo ""
   echo ""
-  echo ""
   echo "There was an issue with the commit message. The commit message must adhere to the regex in the commit-msg file."
   echo ""
   echo "Examples:"

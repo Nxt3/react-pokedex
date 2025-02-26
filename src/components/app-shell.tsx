@@ -1,4 +1,14 @@
-import { ActionIcon, AppShell as MantineAppShell, Group, Stack, Title, useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
+import {
+  ActionIcon,
+  AppShell as MantineAppShell,
+  Group,
+  Stack,
+  Title,
+  Tooltip,
+  useComputedColorScheme,
+  useMantineColorScheme
+} from '@mantine/core';
+import { HiCode } from 'react-icons/hi';
 
 import { getColorSchemeToggleProps } from '../utils/theme-manager';
 import PokemonContainer from './pokemon-container';
@@ -14,9 +24,31 @@ function AppShell() {
         <Group h="100%" px="md" justify="space-between">
           <Title>React Pokédex</Title>
 
-          <ActionIcon size="lg" variant="light" color={colorSchemeToggleProps.color} onClick={toggleColorScheme}>
-            {colorSchemeToggleProps.icon}
-          </ActionIcon>
+          <Group>
+            <Tooltip label="View source code on GitHub">
+              <ActionIcon
+                aria-label="View source code on GitHub"
+                size="lg"
+                variant="light"
+                color="blue.9"
+                onClick={() => window.open('https://github.com/Nxt3/react-pokedex', '_blank', 'noopener')}
+              >
+                <HiCode />
+              </ActionIcon>
+            </Tooltip>
+
+            <Tooltip label="Change theme">
+              <ActionIcon
+                size="lg"
+                variant="light"
+                color={colorSchemeToggleProps.color}
+                onClick={toggleColorScheme}
+                aria-label="Change theme"
+              >
+                {colorSchemeToggleProps.icon}
+              </ActionIcon>
+            </Tooltip>
+          </Group>
         </Group>
       </MantineAppShell.Header>
 
