@@ -1,4 +1,4 @@
-import { ActionIcon } from '@mantine/core';
+import { ActionIcon, Group, Stack } from '@mantine/core';
 import { useQueryClient } from '@tanstack/react-query';
 import { Fragment, useState } from 'react';
 import { HiArrowNarrowLeft, HiArrowNarrowRight } from 'react-icons/hi';
@@ -7,7 +7,7 @@ import { pokemonDetailsQueryOptions, usePokemonQuery } from '../api/pokeapi';
 import { PokemonCard } from './pokemon-card';
 import { PokemonDetailsContainer } from './pokemon-details/pokemon-details-container';
 
-// TODO: not sold on the naming of this
+// TODO / FIXME: not sold on the naming of this
 export function PokemonContainer() {
   const queryClient = useQueryClient();
 
@@ -25,10 +25,10 @@ export function PokemonContainer() {
 
   return (
     <Fragment>
-      <div className="flex flex-col items-center">
+      <Stack justify="center" align="center">
         <PokemonCard onOpenDetails={openPokemonDetails} pokemon={pokemon} isLoading={isLoading} onHover={prefetchPokemonDetails} />
 
-        <div className="flex justify-center mt-1 gap-1">
+        <Group justify="center" align="center" gap="xl">
           {id >= 2 ? (
             <ActionIcon size="xl" onClick={prev}>
               <HiArrowNarrowLeft />
@@ -37,8 +37,8 @@ export function PokemonContainer() {
           <ActionIcon size="xl" onClick={next}>
             <HiArrowNarrowRight />
           </ActionIcon>
-        </div>
-      </div>
+        </Group>
+      </Stack>
 
       {!!pokemon && <PokemonDetailsContainer pokemon={pokemon} showDetails={showDetails} closeDetails={closePokemonDetails} />}
     </Fragment>

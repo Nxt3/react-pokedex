@@ -36,7 +36,7 @@ export function PokemonCard({
   return {
     loading: () => {
       return (
-        <Skeleton>
+        <Skeleton width={'inherit'}>
           <Card {...baseCardProps}></Card>
         </Skeleton>
       );
@@ -49,7 +49,6 @@ export function PokemonCard({
       const { id, name, types, sprites } = pokemon!;
 
       return (
-        // FIXME: need to debounce onMouseEnter
         <Card {...baseCardProps} onClick={onOpenDetails} onMouseEnter={onHover}>
           <Stack align="flex-end" justify="flex-start" gap="xs">
             <Pill size="sm" radius={baseCardProps.radius}>

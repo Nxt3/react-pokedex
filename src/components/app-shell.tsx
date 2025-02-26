@@ -56,7 +56,6 @@ function AppShell() {
         <Stack gap="xl">
           <WorkInProgressAlert />
 
-          {/* FIXME: should this be renamed to something else? DexItem? */}
           <PokemonContainer />
         </Stack>
       </MantineAppShell.Main>
