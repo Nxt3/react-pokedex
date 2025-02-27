@@ -4,6 +4,7 @@ import { Fragment } from 'react/jsx-runtime';
 import pokeball from '../../assets/pokeball.svg';
 import { Pokemon, PokemonDetails as PokemonDetailsType } from '../../types/pokemon';
 import { TemplateState } from '../../types/template-state';
+import { getFlavorText } from '../../utils/flavor-text-transform';
 import { toSentenceCase } from '../../utils/sentence-case';
 import { PokemonTypings } from '../pokemon-typings';
 
@@ -50,6 +51,7 @@ export function PokemonDetails({
     results: () => {
       const { name, types, sprites, height, weight } = pokemon;
       const { flavor_text_entries } = pokemonDetails!;
+      const flavorText = getFlavorText(flavor_text_entries);
 
       // TODO: move to utils
       // convert decimeters to inches
@@ -74,10 +76,11 @@ export function PokemonDetails({
 
           <PokemonTypings types={types} />
 
-          <Text fs="italic" ta="center" mt="md">
-            {/* Find first English flavor text */}
-            {flavor_text_entries?.find((flavorText) => flavorText.language.name === 'en')?.flavor_text}
-          </Text>
+          {!!flavorText && (
+            <Text fs="italic" ta="center" mt="md">
+              {flavorText}
+            </Text>
+          )}
 
           <Stack mt="lg" gap="0">
             <Text>Height: {convertToInches(height)} in</Text>
