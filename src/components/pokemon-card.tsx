@@ -5,12 +5,13 @@ import { Pokemon } from '../types/pokemon';
 import { TemplateState } from '../types/template-state';
 import { PokemonTypings } from './pokemon-typings';
 
-const baseCardProps: CardProps = {
-  shadow: 'md',
-  radius: 'lg',
-  withBorder: true,
-  className: 'w-12 h-14 cursor-pointer'
-};
+const getBaseCardProps = (cursorType: string = 'default') =>
+  ({
+    shadow: 'md',
+    radius: 'lg',
+    withBorder: true,
+    className: `w-12 h-14 cursor-${cursorType}`
+  }) as CardProps;
 
 export function PokemonCard({
   pokemon,
@@ -35,11 +36,8 @@ export function PokemonCard({
 
   return {
     loading: () => {
-      return (
-        <Skeleton width={'inherit'}>
-          <Card {...baseCardProps}></Card>
-        </Skeleton>
-      );
+      const baseProps = getBaseCardProps();
+      return <Skeleton radius={baseProps.radius} className={baseProps.className} />;
     },
     error: () => {
       // TODO: error handling
@@ -47,11 +45,12 @@ export function PokemonCard({
     },
     results: () => {
       const { id, name, types, sprites } = pokemon!;
+      const baseProps = getBaseCardProps('pointer');
 
       return (
-        <Card {...baseCardProps} onClick={onOpenDetails} onMouseEnter={onHover}>
+        <Card {...baseProps} onClick={onOpenDetails} onMouseEnter={onHover}>
           <Stack align="flex-end" justify="flex-start" gap="xs">
-            <Pill size="sm" radius={baseCardProps.radius}>
+            <Pill size="sm" radius={baseProps.radius}>
               {id}
             </Pill>
           </Stack>
