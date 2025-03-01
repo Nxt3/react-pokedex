@@ -1,11 +1,12 @@
-import { Group, Pill, Text } from '@mantine/core';
+import { Pill, Text } from '@mantine/core';
 
 import { Pokemon, PokemonType } from '../types/pokemon';
 import { pokemonTypeColorMapper } from '../utils/pokemon-type-color-mapper';
+import { CenteredGroup } from './centered-group';
 
-export function PokemonTypings({ types }: { types: Pokemon['types'] }) {
+export function PokemonTypings({ types, className }: { types: Pokemon['types']; className?: string }) {
   return (
-    <Group justify="center" align="center" gap="sm">
+    <CenteredGroup align="center" gap="sm" className={className}>
       {types.map(({ type }, index) => {
         const typeName = type.name as PokemonType;
 
@@ -25,6 +26,6 @@ export function PokemonTypings({ types }: { types: Pokemon['types'] }) {
           </Pill>
         );
       })}
-    </Group>
+    </CenteredGroup>
   );
 }

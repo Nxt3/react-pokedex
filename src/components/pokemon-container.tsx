@@ -1,9 +1,10 @@
-import { ActionIcon, Group, Stack } from '@mantine/core';
+import { ActionIcon, Stack } from '@mantine/core';
 import { useQueryClient } from '@tanstack/react-query';
 import { Fragment, useState } from 'react';
 import { HiArrowNarrowLeft, HiArrowNarrowRight } from 'react-icons/hi';
 
 import { pokemonDetailsQueryOptions, usePokemonQuery } from '../api/pokeapi';
+import { CenteredGroup } from './centered-group';
 import { PokemonCard } from './pokemon-card';
 import { PokemonDetailsContainer } from './pokemon-details/pokemon-details-container';
 
@@ -28,7 +29,7 @@ export function PokemonContainer() {
       <Stack justify="center" align="center">
         <PokemonCard onOpenDetails={openPokemonDetails} pokemon={pokemon} isLoading={isLoading} onHover={prefetchPokemonDetails} />
 
-        <Group justify="center" align="center" gap="xl">
+        <CenteredGroup align="center" gap="xl">
           {id >= 2 ? (
             <ActionIcon size="xl" onClick={prev}>
               <HiArrowNarrowLeft />
@@ -37,7 +38,7 @@ export function PokemonContainer() {
           <ActionIcon size="xl" onClick={next}>
             <HiArrowNarrowRight />
           </ActionIcon>
-        </Group>
+        </CenteredGroup>
       </Stack>
 
       {!!pokemon && <PokemonDetailsContainer pokemon={pokemon} showDetails={showDetails} closeDetails={closePokemonDetails} />}

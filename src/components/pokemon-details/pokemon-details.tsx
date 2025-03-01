@@ -1,21 +1,11 @@
-import { Group, Image, ImageProps, Loader, Stack, Text } from '@mantine/core';
+import { Loader, Stack, Text } from '@mantine/core';
 import { Fragment } from 'react/jsx-runtime';
 
-import pokeball from '../../assets/pokeball.svg';
 import { Pokemon, PokemonDetails as PokemonDetailsType } from '../../types/pokemon';
 import { TemplateState } from '../../types/template-state';
 import { getFlavorText } from '../../utils/flavor-text-transform';
 import { toSentenceCase } from '../../utils/sentence-case';
-import { PokemonTypings } from '../pokemon-typings';
-
-const commonSpriteProps = (
-  name: string,
-  variant: 'default' | 'shiny' | 'female' | 'shiny female'
-): ImageProps & { alt: HTMLImageElement['alt'] } => ({
-  w: 96,
-  alt: `${name} ${variant} sprite`,
-  fallbackSrc: pokeball
-});
+import { PokemonSprites } from './pokemon-sprites';
 
 export function PokemonDetails({
   pokemon,
@@ -49,7 +39,7 @@ export function PokemonDetails({
       return null;
     },
     results: () => {
-      const { name, types, sprites, height, weight } = pokemon;
+      const { name, sprites, height, weight } = pokemon;
       const { flavor_text_entries } = pokemonDetails!;
       const flavorText = getFlavorText(flavor_text_entries);
 
@@ -61,20 +51,7 @@ export function PokemonDetails({
 
       return (
         <Fragment>
-          {/* FIXME: DRY */}
-          {/* TODO: Differentiate between male/female */}
-          <Group gap="xs" justify="center">
-            <Image src={sprites.front_default} {...commonSpriteProps(name, 'default')} />
-            <Image src={sprites.front_shiny} {...commonSpriteProps(name, 'shiny')} />
-            {sprites.front_female && (
-              <Fragment>
-                <Image src={sprites.front_female} {...commonSpriteProps(name, 'female')} />
-                <Image src={sprites.front_shiny_female} {...commonSpriteProps(name, 'shiny female')} />
-              </Fragment>
-            )}
-          </Group>
-
-          <PokemonTypings types={types} />
+          <PokemonSprites name={name} sprites={sprites} />
 
           {!!flavorText && (
             <Text fs="italic" ta="center" mt="md">
@@ -83,6 +60,7 @@ export function PokemonDetails({
           )}
 
           <Stack mt="lg" gap="0">
+            {/* TODO: replace with NumberFormatter */}
             <Text>Height: {convertToInches(height)} in</Text>
             <Text>Weight: {convertToPounds(weight)} lbs</Text>
           </Stack>

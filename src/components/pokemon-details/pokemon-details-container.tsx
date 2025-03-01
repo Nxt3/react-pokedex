@@ -2,6 +2,7 @@ import { Group, Modal, Text } from '@mantine/core';
 
 import { usePokemonDetailsQuery } from '../../api/pokeapi';
 import { Pokemon } from '../../types/pokemon';
+import { PokemonTypings } from '../pokemon-typings';
 import { PokemonDetails } from './pokemon-details';
 
 export function PokemonDetailsContainer({
@@ -14,6 +15,7 @@ export function PokemonDetailsContainer({
   closeDetails: () => void;
 }) {
   const { data: pokemonDetails, isLoading } = usePokemonDetailsQuery(pokemon!.id);
+  const { id, name, types } = pokemon;
 
   return (
     <Modal.Root
@@ -28,8 +30,9 @@ export function PokemonDetailsContainer({
         <Modal.Header>
           <Modal.Title>
             <Group gap="xs">
-              <Text fw={500}>#{pokemon.id}</Text>
-              <Text fw={800}>{pokemon.name.toUpperCase()}</Text>
+              <Text fw={500}>#{id}</Text>
+              <Text fw={800}>{name.toUpperCase()}</Text>
+              <PokemonTypings types={types} className="ml-xs" />
             </Group>
           </Modal.Title>
           <Modal.CloseButton />
