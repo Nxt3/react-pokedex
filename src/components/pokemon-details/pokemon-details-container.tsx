@@ -37,6 +37,7 @@ export function PokemonDetailsContainer({
           </Modal.Title>
           <Modal.CloseButton />
         </Modal.Header>
+
         <Modal.Body>
           <PokemonDetails pokemon={pokemon} pokemonDetails={pokemonDetails} isLoading={isLoading} />
         </Modal.Body>

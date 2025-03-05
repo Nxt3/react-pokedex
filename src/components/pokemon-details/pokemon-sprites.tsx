@@ -1,4 +1,4 @@
-import { Divider, Image, ImageProps, Stack, Text } from '@mantine/core';
+import { Image, ImageProps, Stack, Text } from '@mantine/core';
 import { PokeAPI } from 'pokeapi-types';
 import { Fragment } from 'react/jsx-runtime';
 
@@ -9,7 +9,7 @@ export function PokemonSprites({ name, sprites }: { name: string; sprites: PokeA
   const hasFemaleSprites = !!sprites.front_female;
 
   return (
-    <CenteredGroup>
+    <CenteredGroup gap="xl">
       <PokemonSpritePair
         name={name}
         sprites={[sprites.front_default, sprites.front_shiny]}
@@ -19,9 +19,6 @@ export function PokemonSprites({ name, sprites }: { name: string; sprites: PokeA
 
       {hasFemaleSprites && (
         <Fragment>
-          {/* FIXME: visible at wrong breakpoints */}
-          <Divider size="sm" orientation="vertical" visibleFrom="xs" />
-
           <PokemonSpritePair
             name={name}
             sprites={[sprites.front_female, sprites.front_shiny_female]}
