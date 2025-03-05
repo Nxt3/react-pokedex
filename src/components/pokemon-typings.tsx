@@ -4,9 +4,9 @@ import { Pokemon, PokemonType } from '../types/pokemon';
 import { pokemonTypeColorMapper } from '../utils/pokemon-type-color-mapper';
 import { CenteredGroup } from './centered-group';
 
-export function PokemonTypings({ types, className }: { types: Pokemon['types']; className?: string }) {
+export function PokemonTypings({ types }: { types: Pokemon['types'] }) {
   return (
-    <CenteredGroup align="center" gap="sm" className={className}>
+    <CenteredGroup align="center" gap="sm">
       {types.map(({ type }, index) => {
         const typeName = type.name as PokemonType;
 

@@ -32,7 +32,7 @@ export function PokemonDetailsContainer({
             <Group gap="xs">
               <Text fw={500}>#{id}</Text>
               <Text fw={800}>{name.toUpperCase()}</Text>
-              <PokemonTypings types={types} className="ml-xs" />
+              <PokemonTypings types={types} />
             </Group>
           </Modal.Title>
           <Modal.CloseButton />
