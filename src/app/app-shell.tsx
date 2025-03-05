@@ -10,9 +10,9 @@ import {
 } from '@mantine/core';
 import { HiCode } from 'react-icons/hi';
 
+import PokemonContainer from '../components/pokemon-container';
+import { WorkInProgressAlert } from '../components/work-in-progress';
 import { getColorSchemeToggleProps } from '../utils/theme-manager';
-import PokemonContainer from './pokemon-container';
-import { WorkInProgressAlert } from './work-in-progress';
 
 function AppShell() {
   const { toggleColorScheme } = useMantineColorScheme();
@@ -22,8 +22,9 @@ function AppShell() {
     <MantineAppShell padding="md" header={{ height: 64 }}>
       <MantineAppShell.Header>
         <Group h="100%" px="md" justify="space-between">
-          {/* FIXME(#41): Adjust size based on breakpoints */}
-          <Title fz={{ base: '1px', xs: '20px', sm: '40px' }}>React Pokédex</Title>
+          <Title fz={{ base: 'var(--mantine-h1-font-size)', xs: 'var(--mantine-h2-font-size)', sm: 'var(--mantine-h1-font-size)' }}>
+            React Pokédex
+          </Title>
 
           <Group>
             <Tooltip label="View source code on GitHub">
