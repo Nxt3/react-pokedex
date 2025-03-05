@@ -22,7 +22,8 @@ function AppShell() {
     <MantineAppShell padding="md" header={{ height: 64 }}>
       <MantineAppShell.Header>
         <Group h="100%" px="md" justify="space-between">
-          <Title>React Pokédex</Title>
+          {/* FIXME(#41): Adjust size based on breakpoints */}
+          <Title fz={{ base: '1px', xs: '20px', sm: '40px' }}>React Pokédex</Title>
 
           <Group>
             <Tooltip label="View source code on GitHub">
@@ -31,7 +32,7 @@ function AppShell() {
                 size="lg"
                 variant="light"
                 color="blue.9"
-                onClick={() => window.open('https://github.com/Nxt3/react-pokedex', '_blank', 'noopener')}
+                onClick={() => window.open('https://github.com/Nxt3/react-pokedex', '_blank')}
               >
                 <HiCode />
               </ActionIcon>

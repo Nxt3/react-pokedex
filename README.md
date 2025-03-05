@@ -9,4 +9,3 @@
 * [Mantine UI](https://mantine.dev/)
 * [TanStack Query (react-query)](https://tanstack.com/query/latest)
 * [Vite](https://vite.dev/)
-* [Tailwind](https://tailwindcss.com/)
