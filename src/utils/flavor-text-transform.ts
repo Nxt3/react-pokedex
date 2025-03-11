@@ -6,7 +6,7 @@ export function getFlavorText(flavorTextEntries: PokeAPI.FlavorText[]): string |
   const flavorText = firstEnglishFlavorText?.flavor_text;
 
   /**
-   * NOTE: left unprocessed as it is found in game files
+   * NOTE: flavorText is left unprocessed as it is found in game files
    * https://github.com/veekun/pokedex/issues/218#issuecomment-339841781
    */
   return flavorText

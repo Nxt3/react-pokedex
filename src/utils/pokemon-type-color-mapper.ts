@@ -23,5 +23,5 @@ export function pokemonTypeColorMapper(type: PokemonType): StyleProp<DefaultMant
     [PokemonTypes.STEEL]: '#B8B8D0',
     [PokemonTypes.FAIRY]: '#F0B6BC',
     [PokemonTypes.STELLAR]: '#35ACE7'
-  }[type!];
+  }[type];
 }

@@ -9,5 +9,6 @@ export default defineConfig({
   build: {
     outDir: 'public'
   },
+  publicDir: 'assets',
   server: { port: 4300 }
 });

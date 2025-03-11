@@ -1,15 +1,15 @@
-import { Card, CardProps, Image, Pill, Skeleton, Stack, Text } from '@mantine/core';
+import { Card, CardProps, Image, Pill, Skeleton, SkeletonProps, Stack, Text } from '@mantine/core';
 
 import pokeball from '../assets/pokeball.svg';
 import { Pokemon } from '../types/pokemon';
 import { TemplateState } from '../types/template-state';
 import { PokemonTypings } from './pokemon-typings';
 
-const baseCardProps: CardProps = {
+const baseCardProps: CardProps & SkeletonProps = {
   shadow: 'md',
   radius: 'lg',
-  withBorder: true,
-  className: 'w-12 h-14'
+  w: '12rem',
+  h: '14rem'
 };
 
 export function PokemonCard({
@@ -35,7 +35,7 @@ export function PokemonCard({
 
   return {
     loading: () => {
-      return <Skeleton radius={baseCardProps.radius} className={baseCardProps.className} />;
+      return <Skeleton {...baseCardProps} />;
     },
     error: () => {
       // TODO: error handling
@@ -45,7 +45,7 @@ export function PokemonCard({
       const { id, name, types, sprites } = pokemon!;
 
       return (
-        <Card {...baseCardProps} onClick={onOpenDetails} onMouseEnter={onHover} style={{ cursor: 'pointer' }}>
+        <Card {...baseCardProps} withBorder onClick={onOpenDetails} onMouseEnter={onHover} style={{ cursor: 'pointer' }}>
           <Stack align="flex-end" justify="flex-start" gap="xs">
             <Pill size="sm" radius={baseCardProps.radius}>
               {id}
@@ -54,7 +54,7 @@ export function PokemonCard({
 
           <Stack align="center" justify="center" gap="xs">
             <Card.Section>
-              <Image src={sprites.front_default} alt={name} fallbackSrc={pokeball} className="mt-1" />
+              <Image mt="xs" src={sprites.front_default} alt={name} fallbackSrc={pokeball} />
             </Card.Section>
 
             <Text ta="center" fw={800}>

@@ -5,6 +5,7 @@ import { Pokemon, PokemonDetails as PokemonDetailsType } from '../../types/pokem
 import { TemplateState } from '../../types/template-state';
 import { getFlavorText } from '../../utils/flavor-text-transform';
 import { toSentenceCase } from '../../utils/sentence-case';
+import { EvolutionChain } from './evolution-chain';
 import { PokemonSprites } from './pokemon-sprites';
 
 export function PokemonDetails({
@@ -52,13 +53,11 @@ export function PokemonDetails({
       return (
         <Fragment>
           <PokemonSprites name={name} sprites={sprites} />
-
           {!!flavorText && (
             <Text fs="italic" ta="center" mt="md">
               {flavorText}
             </Text>
           )}
-
           <Stack mt="lg" gap="0">
             {/* TODO: replace with NumberFormatter */}
             <Text>Height: {convertToInches(height)} in</Text>
@@ -71,6 +70,8 @@ export function PokemonDetails({
           {pokemon.abilities.map((ability, index) => (
             <Text key={index}>{toSentenceCase(ability.ability.name)}</Text>
           ))}
+
+          <EvolutionChain evolutionChainHref={pokemonDetails?.evolution_chain?.url} />
         </Fragment>
       );
     }
