@@ -1,8 +1,8 @@
-import { Card, CardProps, Image, Pill, Skeleton, SkeletonProps, Stack, Text } from '@mantine/core';
+import { Card, CardProps, Pill, Skeleton, SkeletonProps, Stack, Text } from '@mantine/core';
 
-import pokeball from '../assets/pokeball.svg';
 import { Pokemon } from '../types/pokemon';
 import { TemplateState } from '../types/template-state';
+import { FrontDefaultSprite } from './pokemon-details/pokemon-sprites';
 import { PokemonTypings } from './pokemon-typings';
 
 const baseCardProps: CardProps & SkeletonProps = {
@@ -54,7 +54,7 @@ export function PokemonCard({
 
           <Stack align="center" justify="center" gap="xs">
             <Card.Section>
-              <Image mt="xs" src={sprites.front_default} alt={name} fallbackSrc={pokeball} />
+              <FrontDefaultSprite marginTop="xs" name={name} sprites={sprites} />
             </Card.Section>
 
             <Text ta="center" fw={800}>

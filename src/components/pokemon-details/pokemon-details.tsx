@@ -5,6 +5,7 @@ import { Pokemon, PokemonDetails as PokemonDetailsType } from '../../types/pokem
 import { TemplateState } from '../../types/template-state';
 import { getFlavorText } from '../../utils/flavor-text-transform';
 import { toSentenceCase } from '../../utils/sentence-case';
+import { CenteredGroup } from '../centered-group';
 import { EvolutionChain } from './evolution-chain';
 import { PokemonSprites } from './pokemon-sprites';
 
@@ -71,7 +72,12 @@ export function PokemonDetails({
             <Text key={index}>{toSentenceCase(ability.ability.name)}</Text>
           ))}
 
-          <EvolutionChain evolutionChainHref={pokemonDetails?.evolution_chain?.url} />
+          <Stack justify="center" align="center">
+            <Text fw={600}>Evolution chain</Text>
+            <CenteredGroup>
+              <EvolutionChain evolutionChainHref={pokemonDetails?.evolution_chain?.url} />
+            </CenteredGroup>
+          </Stack>
         </Fragment>
       );
     }

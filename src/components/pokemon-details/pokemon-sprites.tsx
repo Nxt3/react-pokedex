@@ -5,6 +5,10 @@ import { Fragment } from 'react/jsx-runtime';
 import pokeball from '../../assets/pokeball.svg';
 import { CenteredGroup } from '../centered-group';
 
+export function FrontDefaultSprite({ name, sprites, marginTop }: { name: string; sprites: PokeAPI.PokemonSprites; marginTop?: string }) {
+  return <Image src={sprites.front_default} w={96} alt={name} fallbackSrc={pokeball} mt={marginTop} />;
+}
+
 export function PokemonSprites({ name, sprites }: { name: string; sprites: PokeAPI.PokemonSprites }) {
   const hasFemaleSprites = !!sprites.front_female;
 
@@ -41,7 +45,7 @@ const commonSpriteProps = (
 });
 
 /**
- * Normal sprite and shiny sprite
+ * Default sprite and shiny sprite
  */
 function PokemonSpritePair({
   name,

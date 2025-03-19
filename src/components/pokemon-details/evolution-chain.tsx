@@ -1,32 +1,57 @@
-import { usePokemonEvolutionChainQuery } from '../../api/pokeapi';
+import { Group } from '@mantine/core';
+import { PokeAPI } from 'pokeapi-types';
+import { Fragment } from 'react';
+import { HiArrowNarrowRight } from 'react-icons/hi';
+
+import { usePokemonEvolutionChainQuery, usePokemonQuery } from '../../api/pokeapi';
+import { FrontDefaultSprite } from './pokemon-sprites';
 
 export function EvolutionChain({ evolutionChainHref }: { evolutionChainHref?: string }) {
-  const { data: evolution } = usePokemonEvolutionChainQuery(evolutionChainHref);
+  const { data: evolutionChain } = usePokemonEvolutionChainQuery(evolutionChainHref);
 
-  // TODO: make this way prettier and show species sprites
+  const getEvolutionChainIds = (chain: PokeAPI.ChainLink): number[] => {
+    const ids: number[] = [];
+
+    const traverseChain = (chain: PokeAPI.ChainLink) => {
+      const speciesUrl = chain?.species?.url;
+      const speciesMatchArray = speciesUrl?.match(/\/(\d+)\/$/);
+      const speciesId = speciesMatchArray ? parseInt(speciesMatchArray[1]) : undefined;
+
+      if (typeof speciesId === 'number' && !isNaN(speciesId)) {
+        ids.push(speciesId);
+      }
+
+      if (chain.evolves_to) {
+        chain.evolves_to.forEach((evolution: PokeAPI.ChainLink) => {
+          traverseChain(evolution);
+        });
+      }
+    };
+
+    traverseChain(chain);
+    return ids;
+  };
+
+  const evolutionIds = evolutionChain?.chain ? getEvolutionChainIds(evolutionChain.chain) : [];
+
   return (
-    evolution && (
-      <ul>
-        <li>
-          {evolution.chain.species.name}
-          {evolution.chain.evolves_to.length > 0 && (
-            <ul>
-              {evolution.chain.evolves_to.map((_evolution) => (
-                <li key={_evolution.species.name}>
-                  {_evolution.species.name}
-                  {_evolution.evolves_to.length > 0 && (
-                    <ul>
-                      {_evolution.evolves_to.map((subEvolution) => (
-                        <li key={subEvolution.species.name}>{subEvolution.species.name}</li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
-        </li>
-      </ul>
-    )
+    <Fragment>
+      {evolutionChain?.chain && evolutionIds.length >= 1 && (
+        <Group>
+          {evolutionIds.map((id, index) => (
+            <Fragment key={id}>
+              <EvolutionSprite speciesId={id} />
+              {index < evolutionIds.length - 1 && <HiArrowNarrowRight />}
+            </Fragment>
+          ))}
+        </Group>
+      )}
+    </Fragment>
   );
+}
+
+function EvolutionSprite({ speciesId }: { speciesId: number }) {
+  const { data: pokemon } = usePokemonQuery(speciesId);
+
+  return pokemon && <FrontDefaultSprite name={pokemon.name} sprites={pokemon.sprites} />;
 }
